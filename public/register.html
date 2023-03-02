@@ -42,7 +42,26 @@
     </div>
   </body>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
-  <script src="index.js">
+  <script >
+    
+const register=document.getElementById("RegisterButton")
+register.addEventListener('click', async function ()
+{
+    
+    axios.post("http://localhost:3000/RegisterUser", 
+       
+     {
+        name:document.getElementsByName("name")[0].value,
+        email:document.getElementsByName("email")[0].value,
+        password:document.getElementsByName("password")[0].value
+    }
+).then(response=>{
+    console.log(response);
+    alert(`${response.data}.. Login Now?`);
+    location.replace("login.html");
+});
+})
+
        
  
   </script>
