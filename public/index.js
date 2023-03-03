@@ -93,9 +93,6 @@ table.innerHTML=tableHTML;
 }
 }
 
-
-
-
 //=========================================Add New Data===================================================================================
 
 document.getElementById("add-data-button").onclick= async function(e)
@@ -113,8 +110,6 @@ document.getElementById("add-data-button").onclick= async function(e)
     
 }
 //=================================================================Delete Data==================================================
-
-
 
 document.querySelector('table tbody').addEventListener('click', function(event) {
 if (event.target.className === "delete-row-btn") {
