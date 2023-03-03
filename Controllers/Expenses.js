@@ -83,28 +83,24 @@ exports.insertData= (async (req, res)=>{
 
 exports.deleteData= (async (req, res)=>{
     const id= req.params.id
-    const row = await expenses.findOne({
-        attribute:['amount'],
-        where: { productid: id },
-       include: {model: users, attributes: ['TotalExpense'], where:{id:req.id}}
-           
-      });
-      
-      if (row) {
-        const transaction=sequelize.transaction();
-        await row.destroy()
-        .then(response=>
-            {
-                const deleteAmount= response.user.TotalExpense;
-                const updatedAmount= parseInt(deleteAmount)-parseInt(response.amount);
+    const expenseAmount=await expenses.findOne({
+                attribute:['amount'],
+                where: { productid: id }})
+      const userData= await users.findOne({
+            attribute:['TotalExpense'],
+            where:{id:req.id}
+        })
+        
+      if(expenseAmount) {
+                   await expenses.destroy({where:{productid: id}})
+                const deleteAmount= userData.TotalExpense;
+                const updatedAmount= parseInt(deleteAmount)-parseInt(expenseAmount.amount);
                 console.log(deleteAmount);
                 console.log(updatedAmount);
-                expenses.update({TotalExpense: updatedAmount}, {where:{id:req.id}})
-            })
-            
-            //console.log(response.user.TotalExpense)); 
-      }
-      res.send("Data Deleted");
+                users.update({TotalExpense: updatedAmount}, {where:{id:req.id}})
+
+            }
+            res.send("Data Deleted");
     
 })
 
